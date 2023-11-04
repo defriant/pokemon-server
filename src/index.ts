@@ -6,6 +6,7 @@ import compression from 'compression'
 import cors from 'cors'
 import mongoose, { Error } from 'mongoose'
 import router from './router'
+import AuthenticateUser from './middlewares/AuthenticateUser'
 
 process.env.TZ = 'Asia/Jakarta'
 const app = express()
@@ -19,7 +20,9 @@ app.use(
 app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
-app.use('/', router())
+
+app.use('/user', AuthenticateUser)
+app.use(router())
 
 const PORT = 3011
 const server = http.createServer(app)
@@ -27,7 +30,8 @@ server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 })
 
-const MONGO_URL = 'mongodb+srv://pokeapp:L0QO1oFJg90cQscB@cluster0.ppg39mr.mongodb.net/pokemon_api?retryWrites=true&w=majority'
+const MONGO_URL =
+    'mongodb+srv://pokeapp:L0QO1oFJg90cQscB@cluster0.ppg39mr.mongodb.net/pokemon_api?retryWrites=true&w=majority'
 mongoose.Promise = Promise
 mongoose
     .connect(MONGO_URL)

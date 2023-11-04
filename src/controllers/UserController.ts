@@ -1,9 +1,7 @@
 import { Request, Response } from 'express'
-import { validateToken } from '../helpers/jwt'
+import { UserType } from 'models/User'
 
 export const profile = (req: Request, res: Response) => {
-    const { token, _user } = req.body
-    const validate = validateToken(token)
-
-    return res.json(_user)
+    const { _id: id, name, email }: UserType = res.locals.user
+    res.json({ id, name, email })
 }

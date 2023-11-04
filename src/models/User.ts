@@ -7,3 +7,10 @@ const UserSchema = new mongoose.Schema({
 })
 
 export const User = mongoose.model('users', UserSchema)
+
+export type UserType = {
+    _id: string
+    name: string
+    email: string
+    password: string
+}
