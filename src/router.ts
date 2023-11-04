@@ -6,16 +6,16 @@ import {
 import { login, register } from './controllers/AuthContoller'
 import { profile } from './controllers/UserController'
 
-const router = Router()
+const Route = Router()
 
 export default (): Router => {
-    router.get('/pokemons', get_pokemons)
-    router.get('/pokemons/:id', get_pokemon_detail)
+    Route.get('/pokemons', get_pokemons)
+    Route.get('/pokemons/:id', get_pokemon_detail)
 
-    router.post('/auth/register', register)
-    router.get('/auth/login', login)
+    Route.post('/auth/register', register)
+    Route.get('/auth/login', login)
 
-    router.post('/user/profile', profile)
+    Route.post('/user/profile', profile)
 
-    return router
+    return Route
 }
