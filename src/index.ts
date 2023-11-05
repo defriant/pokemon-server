@@ -11,11 +11,7 @@ import AuthenticateUser from './middlewares/AuthenticateUser'
 process.env.TZ = 'Asia/Jakarta'
 const app = express()
 
-app.use(
-    cors({
-        credentials: true,
-    })
-)
+app.use(cors({ credentials: true }))
 
 app.use(compression())
 app.use(cookieParser())
@@ -30,8 +26,7 @@ server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 })
 
-const MONGO_URL =
-    'mongodb+srv://pokeapp:L0QO1oFJg90cQscB@cluster0.ppg39mr.mongodb.net/pokemon_api?retryWrites=true&w=majority'
+const MONGO_URL = 'mongodb+srv://pokeapp:L0QO1oFJg90cQscB@cluster0.ppg39mr.mongodb.net/pokemon_api?retryWrites=true&w=majority'
 mongoose.Promise = Promise
 mongoose
     .connect(MONGO_URL)

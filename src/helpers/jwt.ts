@@ -2,11 +2,7 @@ import { JwtPayload, sign, verify } from 'jsonwebtoken'
 
 const JWTSecret = 'qweasdzxc'
 
-export const createUserToken = (data: {
-    id: string
-    name: string
-    email: string
-}) => {
+export const createUserToken = (data: { id: string; name: string; email: string }) => {
     const token = sign(data, JWTSecret, {
         expiresIn: '30d',
     })

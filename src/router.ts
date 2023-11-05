@@ -1,8 +1,5 @@
 import { Router } from 'express'
-import {
-    get_pokemon_detail,
-    get_pokemons,
-} from './controllers/PokemonController'
+import { get_pokemon_detail, get_pokemons } from './controllers/PokemonController'
 import { login, register } from './controllers/AuthContoller'
 import { profile } from './controllers/UserController'
 
