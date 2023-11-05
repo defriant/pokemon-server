@@ -10,7 +10,12 @@ import AuthenticateUser from './middlewares/AuthenticateUser'
 
 const app = express()
 
-app.use(cors({ credentials: true }))
+app.use(
+    cors({
+        credentials: true,
+        origin: 'http://localhost:3030',
+    }),
+)
 app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -18,7 +23,7 @@ app.use(bodyParser.json())
 app.use('/user', AuthenticateUser)
 app.use(router())
 
-const PORT = 3011
+const PORT = 8030
 const server = http.createServer(app)
 server.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
