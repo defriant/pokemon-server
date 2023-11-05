@@ -25,7 +25,21 @@ export const register = async (req: Request, res: Response) => {
         },
     })
 
-    res.json(createUser)
+    const user = {
+        id: createUser.id,
+        name: createUser.name,
+        email: createUser.email,
+    }
+
+    res.cookie('authorization', createUserToken(user), {
+        maxAge: 2592000000, // 30d
+        httpOnly: true,
+    })
+
+    res.json({
+        user,
+        message: 'Registration successfull',
+    })
 }
 
 export const login = async (req: Request, res: Response) => {
