@@ -13,11 +13,16 @@ type TGetPokemonList = {
 }
 
 export const get_pokemons = async (req: Request, res: Response) => {
+    const { limit, offset } = req.query
+
     let pokemons
 
     try {
         const getPokemon = await axios.get('https://pokeapi.co/api/v2/pokemon', {
-            params: req.query,
+            params: {
+                limit,
+                offset: Number(offset) > 629 ? 629 : offset,
+            },
         })
         pokemons = getPokemon.data
     } catch (err: any) {
@@ -37,7 +42,7 @@ export const get_pokemons = async (req: Request, res: Response) => {
         }
     })
 
-    return res.json({ count, next, previous, data })
+    return res.json({ count, next: Number(offset) > 629 ? null : next, previous, data })
 }
 
 export const get_pokemon_detail = async (req: Request, res: Response) => {
