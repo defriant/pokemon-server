@@ -8,11 +8,9 @@ import mongoose, { Error } from 'mongoose'
 import router from './router'
 import AuthenticateUser from './middlewares/AuthenticateUser'
 
-process.env.TZ = 'Asia/Jakarta'
 const app = express()
 
 app.use(cors({ credentials: true }))
-
 app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -32,3 +30,5 @@ mongoose
     .connect(MONGO_URL)
     .then(() => console.log('MongoDB connected'))
     .catch((err: Error) => console.log(err))
+
+process.env.TZ = 'Asia/Jakarta'

@@ -19,6 +19,10 @@ export const register = async (req: Request, res: Response) => {
         name: name,
         email: email,
         password: hashedPassword,
+        pokeball: {
+            max: 10,
+            refreshes: [],
+        },
     })
 
     res.json(createUser)

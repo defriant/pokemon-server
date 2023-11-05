@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Request, Response } from 'express'
+import getCaptureRate from '../helpers/capture_rate'
 
 export const get_pokemons = async (req: Request, res: Response) => {
     let pokemons
@@ -11,26 +12,24 @@ export const get_pokemons = async (req: Request, res: Response) => {
         pokemons = getPokemon.data
     } catch (err: any) {
         const { status, data } = err.response
-
-        res.status(status)
-        res.json({ message: data })
+        return res.status(status).json({ message: data })
     }
 
-    res.json(pokemons)
+    return res.json(pokemons)
 }
 
 export const get_pokemon_detail = async (req: Request, res: Response) => {
-    let data
+    let pokemon
 
     try {
         const getDetailPokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`)
-        data = getDetailPokemon.data
+        pokemon = getDetailPokemon.data
     } catch (err: any) {
         const { status, data } = err.response
-
-        res.status(status)
-        res.json({ message: data })
+        return res.status(status).json({ message: data })
     }
 
-    res.json(data)
+    let capture_rate = getCaptureRate(pokemon.stats)
+
+    return res.json({ capture_rate, ...pokemon })
 }
