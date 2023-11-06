@@ -36,6 +36,7 @@ export const get_pokemons = async (req: Request, res: Response) => {
         const getPokemonIdFromUrl = v.url.slice(0, -1).split('/').pop()
 
         return {
+            id: getPokemonIdFromUrl,
             name: v.name,
             image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${getPokemonIdFromUrl}.svg`,
             url: v.url,
