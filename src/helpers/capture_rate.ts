@@ -18,7 +18,9 @@ const getCaptureRate = (stats: TPokemonStats[]) => {
     if (totalStat >= 350 && totalStat < 400) return 55
     if (totalStat >= 400 && totalStat < 450) return 45
     if (totalStat >= 450 && totalStat < 500) return 35
-    return 25
+    if (totalStat >= 500 && totalStat < 550) return 25
+    if (totalStat >= 550 && totalStat < 600) return 15
+    return 10
 }
 
 export default getCaptureRate
