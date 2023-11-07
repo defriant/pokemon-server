@@ -10,12 +10,12 @@ import AuthenticateUser from './middlewares/AuthenticateUser'
 
 const app = express()
 
-app.use(
-    cors({
-        credentials: true,
-        origin: 'http://localhost:3030',
-    }),
-)
+// app.use(
+//     cors({
+//         credentials: true,
+//         origin: 'http://localhost:3030',
+//     }),
+// )
 app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())

@@ -1,6 +1,8 @@
 import axios from 'axios'
 import { Request, Response } from 'express'
 import getCaptureRate from '../helpers/capture_rate'
+import { MyPokemon } from '../models/MyPokemon'
+import { validateToken } from '../helpers/jwt'
 
 type TGetPokemonList = {
     count: any
@@ -32,22 +34,35 @@ export const get_pokemons = async (req: Request, res: Response) => {
 
     const { count, next, previous, results }: TGetPokemonList = pokemons
 
-    const data = results.map(v => {
-        const getPokemonIdFromUrl = v.url.slice(0, -1).split('/').pop()
+    const data = await Promise.all(
+        results.map(async v => {
+            const getPokemonIdFromUrl: string = v.url.slice(0, -1).split('/').pop()
+            let isObtained: boolean = false
 
-        return {
-            id: getPokemonIdFromUrl,
-            name: v.name,
-            image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${getPokemonIdFromUrl}.svg`,
-            url: v.url,
-        }
-    })
+            if (req.cookies['authorization']) {
+                const token = validateToken(req.cookies['authorization'])
+                if (token) {
+                    const checkIsObtained = await MyPokemon.findOne({ user_id: token.id, pokemon_id: Number(getPokemonIdFromUrl) })
+                    if (checkIsObtained) isObtained = true
+                }
+            }
+
+            return {
+                id: Number(getPokemonIdFromUrl),
+                name: v.name,
+                image: `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/${getPokemonIdFromUrl}.svg`,
+                url: v.url,
+                isObtained,
+            }
+        }),
+    )
 
     return res.json({ count, next: Number(offset) > 629 ? null : next, previous, data })
 }
 
 export const get_pokemon_detail = async (req: Request, res: Response) => {
-    let pokemon
+    let pokemon: any | undefined,
+        isObtained: boolean = false
 
     try {
         const getDetailPokemon = await axios.get(`https://pokeapi.co/api/v2/pokemon/${req.params.id}`)
@@ -57,7 +72,15 @@ export const get_pokemon_detail = async (req: Request, res: Response) => {
         return res.status(status).json({ message: data })
     }
 
-    let capture_rate = getCaptureRate(pokemon.stats)
+    const capture_rate = getCaptureRate(pokemon.stats)
 
-    return res.json({ capture_rate, ...pokemon })
+    if (req.cookies['authorization']) {
+        const token = validateToken(req.cookies['authorization'])
+        if (token) {
+            const checkIsObtained = await MyPokemon.findOne({ user_id: token.id, pokemon_id: pokemon.id })
+            if (checkIsObtained) isObtained = true
+        }
+    }
+
+    return res.json({ isObtained, capture_rate, ...pokemon })
 }
