@@ -3,7 +3,7 @@ import { validateToken } from '../helpers/jwt'
 import { User, UserType } from '../models/User'
 
 const AuthenticateUser = async (req: Request, res: Response, next: NextFunction) => {
-    const token = validateToken(req.cookies['authorization'])
+    const token = validateToken(req.headers['authorization'])
 
     if (!token) return res.status(401).json({ message: 'Unauthenticated' })
 
