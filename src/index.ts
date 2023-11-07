@@ -1,5 +1,4 @@
 import express from 'express'
-import http from 'http'
 import bodyParser from 'body-parser'
 import cookieParser from 'cookie-parser'
 import compression from 'compression'
@@ -10,12 +9,12 @@ import AuthenticateUser from './middlewares/AuthenticateUser'
 
 const app = express()
 
-// app.use(
-//     cors({
-//         credentials: true,
-//         origin: 'http://localhost:3030',
-//     }),
-// )
+app.use(
+    cors({
+        credentials: true,
+        origin: true,
+    }),
+)
 app.use(compression())
 app.use(cookieParser())
 app.use(bodyParser.json())
@@ -24,8 +23,7 @@ app.use('/user', AuthenticateUser)
 app.use(router())
 
 const PORT = 8030
-const server = http.createServer(app)
-server.listen(PORT, () => {
+app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 })
 
