@@ -1,0 +1,1 @@
+{"version":3,"file":"MyPokemon.js","sourceRoot":"","sources":["../../src/models/MyPokemon.ts"],"names":[],"mappings":";;;;;;AAAA,wDAA+B;AAE/B,MAAM,eAAe,GAAG,IAAI,kBAAQ,CAAC,MAAM,CAAC;IACxC,UAAU,EAAE,MAAM;IAClB,OAAO,EAAE,MAAM;IACf,IAAI,EAAE,MAAM;IACZ,KAAK,EAAE,MAAM;IACb,WAAW,EAAE,MAAM;CACtB,CAAC,CAAA;AAEW,QAAA,SAAS,GAAG,kBAAQ,CAAC,KAAK,CAAC,WAAW,EAAE,eAAe,CAAC,CAAA"}
