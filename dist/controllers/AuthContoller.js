@@ -63,6 +63,7 @@ const login = async (req, res) => {
     res.cookie('authorization', (0, jwt_1.createUserToken)(data), {
         maxAge: 2592000000,
         sameSite: 'none',
+        secure: true,
     });
     return res.json({ ...data });
 };
