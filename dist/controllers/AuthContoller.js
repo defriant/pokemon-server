@@ -34,7 +34,8 @@ const register = async (req, res) => {
         email: createUser.email,
     };
     res.cookie('authorization', (0, jwt_1.createUserToken)(user), {
-        maxAge: 2592000000, // 30d
+        maxAge: 2592000000,
+        sameSite: 'none',
     });
     res.json({
         user,
@@ -60,7 +61,8 @@ const login = async (req, res) => {
         email: user.email,
     };
     res.cookie('authorization', (0, jwt_1.createUserToken)(data), {
-        maxAge: 2592000000, // 30d
+        maxAge: 2592000000,
+        sameSite: 'none',
     });
     return res.json({ ...data });
 };

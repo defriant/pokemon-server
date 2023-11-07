@@ -33,6 +33,7 @@ export const register = async (req: Request, res: Response) => {
 
     res.cookie('authorization', createUserToken(user), {
         maxAge: 2592000000, // 30d
+        sameSite: 'none',
     })
 
     res.json({
@@ -61,6 +62,7 @@ export const login = async (req: Request, res: Response) => {
 
     res.cookie('authorization', createUserToken(data), {
         maxAge: 2592000000, // 30d
+        sameSite: 'none',
     })
     return res.json({ ...data })
 }
