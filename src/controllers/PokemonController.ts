@@ -39,8 +39,8 @@ export const get_pokemons = async (req: Request, res: Response) => {
             const getPokemonIdFromUrl: string = v.url.slice(0, -1).split('/').pop()
             let isObtained: boolean = false
 
-            if (req.cookies['authorization']) {
-                const token = validateToken(req.cookies['authorization'])
+            if (req.headers['authorization']) {
+                const token = validateToken(req.headers['authorization'])
                 if (token) {
                     const checkIsObtained = await MyPokemon.findOne({ user_id: token.id, pokemon_id: Number(getPokemonIdFromUrl) })
                     if (checkIsObtained) isObtained = true
@@ -74,8 +74,8 @@ export const get_pokemon_detail = async (req: Request, res: Response) => {
 
     const capture_rate = getCaptureRate(pokemon.stats)
 
-    if (req.cookies['authorization']) {
-        const token = validateToken(req.cookies['authorization'])
+    if (req.headers['authorization']) {
+        const token = validateToken(req.headers['authorization'])
         if (token) {
             const checkIsObtained = await MyPokemon.findOne({ user_id: token.id, pokemon_id: pokemon.id })
             if (checkIsObtained) isObtained = true
