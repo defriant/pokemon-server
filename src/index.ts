@@ -7,6 +7,7 @@ import mongoose, { Error } from 'mongoose'
 import router from './router'
 import AuthenticateUser from './middlewares/AuthenticateUser'
 
+require('dotenv').config()
 const app = express()
 
 app.use(
@@ -27,10 +28,10 @@ app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`)
 })
 
-const MONGO_URL = 'mongodb+srv://pokeapp:L0QO1oFJg90cQscB@cluster0.ppg39mr.mongodb.net/pokemon_api?retryWrites=true&w=majority'
+const MONGO_URI = process.env.MONGO_URI
 mongoose.Promise = Promise
 mongoose
-    .connect(MONGO_URL)
+    .connect(MONGO_URI)
     .then(() => console.log('MongoDB connected'))
     .catch((err: Error) => console.log(err))
 
