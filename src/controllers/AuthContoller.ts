@@ -31,14 +31,15 @@ export const register = async (req: Request, res: Response) => {
         email: createUser.email,
     }
 
-    res.cookie('authorization', createUserToken(user), {
-        maxAge: 2592000000, // 30d
-        sameSite: 'none',
-    })
+    const token = createUserToken(user)
 
     res.json({
         user,
         message: 'Registration successfull',
+        session: {
+            token,
+            maxAge: 2592000000,
+        },
     })
 }
 
@@ -60,10 +61,12 @@ export const login = async (req: Request, res: Response) => {
         email: user.email,
     }
 
-    res.cookie('authorization', createUserToken(data), {
-        maxAge: 2592000000, // 30d
-        sameSite: 'none',
-        secure: true,
+    const token = createUserToken(data)
+    return res.json({
+        user: data,
+        session: {
+            token,
+            maxAge: 2592000000,
+        },
     })
-    return res.json({ ...data })
 }

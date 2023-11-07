@@ -33,13 +33,14 @@ const register = async (req, res) => {
         name: createUser.name,
         email: createUser.email,
     };
-    res.cookie('authorization', (0, jwt_1.createUserToken)(user), {
-        maxAge: 2592000000,
-        sameSite: 'none',
-    });
+    const token = (0, jwt_1.createUserToken)(user);
     res.json({
         user,
         message: 'Registration successfull',
+        session: {
+            token,
+            maxAge: 2592000000,
+        },
     });
 };
 exports.register = register;
@@ -60,12 +61,14 @@ const login = async (req, res) => {
         name: user.name,
         email: user.email,
     };
-    res.cookie('authorization', (0, jwt_1.createUserToken)(data), {
-        maxAge: 2592000000,
-        sameSite: 'none',
-        secure: true,
+    const token = (0, jwt_1.createUserToken)(data);
+    return res.json({
+        user: data,
+        session: {
+            token,
+            maxAge: 2592000000,
+        },
     });
-    return res.json({ ...data });
 };
 exports.login = login;
 //# sourceMappingURL=AuthContoller.js.map
